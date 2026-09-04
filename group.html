@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      #lower-leaderboard {
+        scrollbar-width: none;
+      }
+
+      #lower-leaderboard::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+
+    <link rel="stylesheet" href="src/output.css" />
+    <script type="module" src="js_files/main.js"></script>
+
+    <title>Kitna Padha?</title>
+  </head>
+
+  <body
+    id="app-body"
+    class="min-h-screen bg-[#010006] text-[#D8DFFF] font-[Poppins,sans-serif]"
+  >
+    <!-- =========================================================
+       APP WRAPPER
+  ========================================================== -->
+    <main
+      id="app"
+      class="min-h-screen bg-linear-to-br from-[#010006] via-[#03001C] to-[#0B0045]"
+    >
+      <!-- =======================================================
+         HEADER
+    ======================================================== -->
+      <header
+        id="app-header"
+        class="flex h-[76px] w-full items-center justify-between border-b border-[#5A4BDA] px-5 sm:px-8 lg:px-10"
+        aria-label="Application header"
+      >
+        <!-- Brand -->
+        <a
+          id="brand-link"
+          href="#"
+          class="flex items-center gap-3"
+          aria-label="Kitna Padha home"
+        >
+          <img
+            src="assets/kitna_padha_transparent_icon.png"
+            alt="Kitna Padha? icon"
+            class="object-cover w-10 h-10 aspect-square"
+          />
+
+          <span
+            id="brand-name"
+            class="text-xl font-bold tracking-tight sm:text-2xl"
+          >
+            Kitna Padha?
+          </span>
+        </a>
+
+        <!-- Personal Stats -->
+        <section
+          id="personal-stats"
+          class="flex items-center gap-2 rounded-full border border-[#5A4BDA] bg-[#09052A]/80 p-1.5 sm:gap-3 sm:px-2"
+          aria-label="Your study statistics"
+        >
+          <!-- logout -->
+          <button
+            class="cursor-pointer flex items-center gap-2 rounded-full px-2 py-1 sm:px-3 bg-[#373077]"
+            type="button"
+            id="logout-btn"
+            aria-label="Current study streak"
+          >
+            <!-- Fire icon placeholder -->
+            <div
+              class="flex h-7 w-7 items-center justify-center"
+              aria-hidden="true"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#D8DFFF"
+              >
+                <path
+                  d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"
+                />
+              </svg>
+            </div>
+
+            <span class="text-base font-semibold text-[#D8DFFF] sm:text-lg">
+              logout
+            </span>
+          </button>
+
+          <!-- Streak -->
+          <div
+            class="flex items-center gap-2 rounded-full px-2 py-1 sm:px-3 bg-[#373077]"
+            aria-label="Current study streak"
+          >
+            <!-- Fire icon placeholder -->
+            <div
+              class="flex h-7 w-7 items-center justify-center"
+              aria-hidden="true"
+            >
+              <img
+                src="assets/orange_streak.png"
+                alt="Study streak"
+                class="h-7 w-7 object-contain"
+              />
+            </div>
+
+            <span
+              id="streak-value"
+              class="text-base font-semibold text-[#D8DFFF] sm:text-lg"
+            >
+              0
+            </span>
+          </div>
+
+          <!-- XP -->
+          <div
+            class="flex items-center gap-2 rounded-full bg-[#373077] px-3 py-1.5 text-[#010006] sm:px-4"
+            aria-label="Your current XP"
+          >
+            <!-- XP icon placeholder -->
+            <div
+              class="flex h-6 w-6 items-center justify-center"
+              aria-hidden="true"
+            >
+              <img
+                src="assets/xp.png"
+                alt="XP"
+                class="h-6 w-6 object-contain"
+              />
+            </div>
+
+            <span
+              id="xp-value"
+              class="text-[#D8DFFF] text-sm font-semibold sm:text-base"
+            >
+              0
+            </span>
+          </div>
+
+          <!-- Profile -->
+          <button
+            id="profile-button"
+            type="button"
+            class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#373077] transition-opacity hover:opacity-80 cursor-pointer sm:h-11 sm:w-11"
+            aria-label="Open profile"
+          >
+            <img
+              id="profile-image"
+              src="assets/default_pfp.png"
+              alt="Profile"
+              class="h-full w-full object-cover"
+            />
+          </button>
+        </section>
+      </header>
+
+      <!-- =======================================================
+         MAIN CONTENT
+    ======================================================== -->
+      <div
+        id="main-layout"
+        class="mx-auto flex min-h-[calc(100vh-76px)] max-w-[1600px]"
+      >
+        <!-- =====================================================
+           FRIENDS SIDEBAR
+      ====================================================== -->
+        <aside
+          id="friends-sidebar"
+          class="w-[300px] flex flex-col gap-7 shrink-0 border-r border-[#5A4BDA] p-6 lg:w-[330px] lg:p-8"
+          aria-label="Friends list"
+        >
+          <div class="w-full h-max flex flex-row justify-between items-center">
+            <h2 id="friends-heading" class="text-lg font-semibold sm:text-xl">
+              Apke Dost
+            </h2>
+
+            <button
+              id="check-friend-request"
+              class="p-2 rounded-full border border-[#5A4BDA] bg-[#373077]/50 hover:scale-105 hover:bg-[#373077] transition-all duration-250 cursor-pointer"
+              type="button"
+              aria-label="Click to check friend request"
+            >
+              <div id="close-svg-wrapper" style="display: none">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z"
+                    fill="#D8DFFF"
+                  />
+                </svg>
+              </div>
+
+              <div id="heart-svg-wrapper">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 31 31"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M26.9184 5.95456C26.2587 5.29453 25.4754 4.77094 24.6132 4.41371C23.7511 4.05648 22.827 3.87262 21.8938 3.87262C20.9606 3.87262 20.0365 4.05648 19.1744 4.41371C18.3123 4.77094 17.529 5.29453 16.8692 5.95456L15.5001 7.32373L14.1309 5.95456C12.7983 4.62196 10.9909 3.87331 9.10632 3.87331C7.22174 3.87331 5.41434 4.62196 4.08174 5.95456C2.74914 7.28716 2.00049 9.09456 2.00049 10.9791C2.00049 12.8637 2.74914 14.6711 4.08174 16.0037L15.5001 27.4221L26.9184 16.0037C27.5784 15.344 28.102 14.5607 28.4593 13.6986C28.8165 12.8364 29.0003 11.9124 29.0003 10.9791C29.0003 10.0459 28.8165 9.12186 28.4593 8.25973C28.102 7.39759 27.5784 6.61429 26.9184 5.95456Z"
+                    stroke="#D8DFFF"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+
+          <input
+            id="search-friend-id"
+            type="text"
+            placeholder="Enter friend ID"
+            maxlength="11"
+            class="w-full h-9 bg-[#5A4BDA]/50 focus:bg-[#5A4BDA]/80 rounded-full py-6 px-5 outline-0 border-0 text-lg"
+          />
+
+          <!-- list -->
+          <div>
+            <nav
+              id="friends-list"
+              aria-label="Your friends"
+              class="flex flex-col gap-3"
+            >
+              <div
+                id="no-friends-message"
+                class="flex flex-col gap-0.5 text-center p-4 text-base font-semibold sm:text-lg bg-[#AFBFFF]/10 rounded-3xl"
+                style="display: none"
+              >
+                <p>Yahan toh sannata hai 💀</p>
+                <p>Kisi ko add kar bhai!</p>
+              </div>
+            </nav>
+
+            <div
+              id="friend-search-result"
+              aria-label="searched friend"
+              style="display: none"
+            ></div>
+
+            <div
+              id="friend-request-list-wrapper"
+              aria-label="Friend request list"
+              style="display: none"
+            >
+              <div
+                id="no-requested-message-box"
+                class="flex flex-col gap-0.5 text-center p-4 text-base font-semibold sm:text-lg bg-[#AFBFFF]/10 rounded-3xl"
+              >
+                <p>Sannata hai bhai…</p>
+                <p>koi request nahi aayi.</p>
+              </div>
+
+              <div id="friend-request-list" class="flex flex-col gap-3"></div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- =====================================================
+           Side panel
+      ====================================================== -->
+        <section class="min-w-0 flex-1 px-5 py-7 grid place-items-center">
+          <div class="flex flex-col" id="leaderboard-wrapper">
+            <h1
+              id="competition-heading"
+              class="mb-6 text-lg font-semibold sm:text-xl"
+            >
+              Asli competition
+            </h1>
+
+            <!-- ===================================================
+             LEADERBOARD CARD
+        ==================================================== -->
+            <article
+              id="leaderboard-card"
+              class="mx-auto w-full max-w-[760px] flex flex-row overflow-hidden rounded-[28px] bg-[#AFBFFF]/5"
+              aria-label="Friends leaderboard"
+            >
+              <!-- ================================================
+               PODIUM
+          ================================================= -->
+              <div
+                id="leaderboard-podium"
+                class="relative flex h-[330px] items-end justify-center gap-2 px-4 pb-0 pt-12 sm:h-[370px] sm:gap-10 sm:px-10"
+              ></div>
+
+              <!-- ================================================
+               EMPTY / INFO AREA
+          ================================================= -->
+              <div
+                id="leaderboard-info"
+                class="flex min-h-[170px] items-center justify-center text-center sm:min-h-[175px]"
+              >
+                <!-- Other Students -->
+                <div
+                  class="w-full px-8 space-y-3 h-full max-h-[330px] overflow-y-auto"
+                  id="lower-leaderboard"
+                ></div>
+              </div>
+
+              <div
+                id="no-friends-message-leaderboard"
+                class="flex flex-col gap-0.5 text-center p-4 text-base font-semibold sm:text-lg bg-[#AFBFFF]/10 rounded-3xl"
+              >
+                <p>Abhi competition sirf khud se hai 💀</p>
+              </div>
+            </article>
+          </div>
+
+          <!-- User profile -->
+          <div
+            id="user-profile"
+            class="w-[55%] text-[#D8DFFF]"
+            aria-label="User profile"
+            style="display: none"
+          >
+            <!-- Page Header -->
+            <header class="flex items-center gap-1">
+              <button
+                id="profile-back-btn"
+                type="button"
+                class="flex items-center justify-center cursor-pointer rounded-full p-1 text-[#D8DFFF]"
+                aria-label="Go back to leaderboard"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10 22L0 12L10 2L11.775 3.775L3.55 12L11.775 20.225L10 22Z"
+                    fill="#D8DFFF"
+                  />
+                </svg>
+              </button>
+
+              <h1 class="text-lg font-semibold sm:text-xl" id="display-name">
+                User - Profile
+              </h1>
+            </header>
+
+            <!-- Profile Card -->
+            <article
+              class="relative w-full rounded-[2rem] bg-[#AFBFFF]/5 px-10 py-4 mt-4"
+              aria-label="User profile information"
+            >
+              <!-- Profile Picture -->
+              <figure class="flex flex-col text-center items-center">
+                <label
+                  for="profile-picture"
+                  class="group relative cursor-pointer"
+                  aria-label="Change profile picture"
+                >
+                  <img
+                    src="assets/default_pfp.png"
+                    alt="User profile picture"
+                    class="h-24 w-24 rounded-full object-cover transition-opacity duration-200 group-hover:opacity-75"
+                    id="display-pfp"
+                  />
+
+                  <!-- Hover overlay -->
+                  <span
+                    class="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 text-lg font-medium text-[#D8DFFF] opacity-0 transition-opacity duration-200 group-hover:opacity-100 truncate"
+                    aria-hidden="true"
+                  >
+                    Change
+                  </span>
+                </label>
+
+                <input
+                  id="profile-picture"
+                  name="profilePicture"
+                  type="file"
+                  accept="image/*"
+                  class="sr-only"
+                  aria-label="Choose a profile picture"
+                />
+
+                <div>
+                  <figcaption
+                    id="display-username"
+                    class="mt-2 text-lg font-semibold sm:text-xl"
+                  >
+                    Username
+                  </figcaption>
+
+                  <span id="kp-id">ID: KP-XXXXXXXX</span>
+                </div>
+              </figure>
+
+              <!-- Stats -->
+              <section
+                class="mt-5 grid grid-cols-2 gap-2"
+                aria-label="User statistics"
+              >
+                <!-- Streak -->
+                <article
+                  class="rounded-l-4xl rounded-r-2xl bg-[#5A4BDA]/35 px-5 py-4"
+                  aria-label="Streak statistics"
+                >
+                  <h2 class="text-lg sm:text-xs font-medium text-[#B8B0FF]">
+                    Streak
+                  </h2>
+
+                  <dl class="mt-1 text-xs font-semibold sm:text-sm">
+                    <div>
+                      <dt class="inline">Current</dt>
+                      <dd class="inline" id="current-streak">0</dd>
+                    </div>
+
+                    <div>
+                      <dt class="inline">Highest</dt>
+                      <dd class="inline" id="highest-streak">0</dd>
+                    </div>
+                  </dl>
+                </article>
+
+                <!-- XP -->
+                <article
+                  class="rounded-l-2xl rounded-r-4xl bg-[#5A4BDA]/35 px-5 py-4"
+                  aria-label="Experience points"
+                >
+                  <h2 class="text-lg sm:text-xs font-medium text-[#B8B0FF]">
+                    XP
+                  </h2>
+
+                  <dl class="mt-1 text-xs font-semibold sm:text-sm">
+                    <div>
+                      <dt class="inline">Weekly</dt>
+                      <dd class="inline" id="weekly-xp">0</dd>
+                    </div>
+
+                    <div>
+                      <dt class="inline">All time</dt>
+                      <dd class="inline" id="all-time-xp">0</dd>
+                    </div>
+                  </dl>
+                </article>
+              </section>
+
+              <!-- Profile Fields -->
+              <section
+                class="mt-5 flex flex-col gap-2"
+                aria-label="User information"
+              >
+                <!-- Thoughts -->
+                <div
+                  class="w-full rounded-t-4xl rounded-b-2xl bg-[#5A4BDA]/35 p-5 text-xs font-semibold sm:text-sm text-[#D8DFFF]"
+                >
+                  <label for="thoughts" class="text-[#B8B0FF]">
+                    Thoughts
+                  </label>
+
+                  <textarea
+                    id="thoughts"
+                    name="thoughts"
+                    rows="2"
+                    placeholder="Thoughts"
+                    aria-label="Thoughts"
+                    class="block resize-none placeholder-transparent border-none outline-none w-full"
+                  ></textarea>
+                </div>
+
+                <!-- Exams -->
+                <div
+                  class="w-full rounded-2xl bg-[#5A4BDA]/35 p-5 text-xs font-semibold sm:text-sm text-[#D8DFFF]"
+                >
+                  <label for="exams" class="text-[#B8B0FF]"> Exams </label>
+
+                  <textarea
+                    id="exams"
+                    name="exams"
+                    rows="1"
+                    placeholder="Exams"
+                    aria-label="Exams"
+                    class="block resize-none placeholder-transparent border-none outline-none w-full"
+                  ></textarea>
+                </div>
+
+                <!-- Targeting -->
+                <div
+                  class="w-full rounded-b-4xl rounded-t-2xl bg-[#5A4BDA]/35 p-5 text-xs font-semibold sm:text-sm text-[#D8DFFF]"
+                >
+                  <label for="targeting" class="text-[#B8B0FF]">
+                    Targeting
+                  </label>
+
+                  <textarea
+                    id="targeting"
+                    name="targeting"
+                    rows="1"
+                    placeholder="Targeting"
+                    aria-label="Targeting"
+                    class="block resize-none placeholder-transparent border-none outline-none w-full"
+                  ></textarea>
+                </div>
+              </section>
+
+              <button
+                type="button"
+                id="save-changes"
+                aria-label="save changes"
+                class="absolute top-3 right-3 rounded-full px-5 py-3 text-lg font-semibold sm:text-xl text-[#B8B0FF] bg-[#5A4BDA]/35 hover:bg-[#5A4BDA]/50 transition-all duration-250 cursor-pointer z-1 text-center"
+              >
+                Save
+              </button>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
