@@ -1,4 +1,10 @@
-# 📚 Kitna Padha
+<div align="left">
+
+<img src="icons/icon128.png" width="70" align="left">
+
+# Kitna Padha
+
+</div>
 
 > **Study together. Track progress. Stay consistent.**
 
