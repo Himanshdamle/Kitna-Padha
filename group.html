@@ -332,11 +332,11 @@
             style="display: none"
           >
             <!-- Page Header -->
-            <header class="flex items-center gap-1">
+            <header class="flex items-center">
               <button
                 id="profile-back-btn"
                 type="button"
-                class="flex items-center justify-center cursor-pointer rounded-full p-1 text-[#D8DFFF]"
+                class="flex items-center justify-center cursor-pointer rounded-full text-[#D8DFFF]"
                 aria-label="Go back to leaderboard"
               >
                 <svg
@@ -353,9 +353,29 @@
                 </svg>
               </button>
 
-              <h1 class="text-lg font-semibold sm:text-xl" id="display-name">
-                User - Profile
-              </h1>
+              <div
+                class="text-lg sm:text-xl font-semibold text-[#D8DFFF] flex flex-row"
+              >
+                <div class="relative">
+                  <span
+                    id="display-name-sizer"
+                    class="invisible absolute top-0 left-0 whitespace-pre"
+                    >User</span
+                  >
+
+                  <input
+                    type="text"
+                    id="display-name"
+                    value="User"
+                    placeholder="Display name"
+                    class="outline-none"
+                    maxlength="40"
+                    width="4ch"
+                  />
+                </div>
+
+                <span>- profile</span>
+              </div>
             </header>
 
             <!-- Profile Card -->

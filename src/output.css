@@ -209,6 +209,9 @@
   .pointer-events-none {
     pointer-events: none;
   }
+  .invisible {
+    visibility: hidden;
+  }
   .sr-only {
     position: absolute;
     width: 1px;
@@ -231,6 +234,9 @@
   }
   .inset-0 {
     inset: 0px;
+  }
+  .top-0 {
+    top: 0px;
   }
   .top-1 {
     top: var(--spacing);
@@ -331,6 +337,9 @@
   .inline {
     display: inline;
   }
+  .inline-grid {
+    display: inline-grid;
+  }
   .table {
     display: table;
   }
@@ -342,9 +351,6 @@
   }
   .h-4 {
     height: calc(var(--spacing) * 4);
-  }
-  .h-5 {
-    height: calc(var(--spacing) * 5);
   }
   .h-6 {
     height: calc(var(--spacing) * 6);
@@ -399,9 +405,6 @@
   }
   .w-4 {
     width: calc(var(--spacing) * 4);
-  }
-  .w-5 {
-    width: calc(var(--spacing) * 5);
   }
   .w-6 {
     width: calc(var(--spacing) * 6);
@@ -1047,6 +1050,9 @@
   .tracking-tight {
     --tw-tracking: var(--tracking-tight);
     letter-spacing: var(--tracking-tight);
+  }
+  .whitespace-pre {
+    white-space: pre;
   }
   .text-\[\#4F5677\] {
     color: #4F5677;

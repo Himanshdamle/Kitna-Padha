@@ -36,7 +36,7 @@ export function getSearchedFriend(friend, isAlreadyRequested) {
         </div>
 
         <div class="flex flex-col items-start justify-start gap-0.5">
-          <span class="friend-name text-xl font-semibold"></span>
+          <span class="friend-name text-xl font-semibold truncate" style="width=90px"></span>
 
           <span class="friend-xp text-xs font-semibold">
             ${friend.weekly_xp} XP
@@ -237,7 +237,7 @@ export function getFriend(friend) {
 
         <div class="flex flex-col items-start justify-start gap-0.5">
 
-          <span class="friend-name text-xl font-semibold"></span>
+          <span class="friend-name text-xl font-semibold truncate" style="width: 130px"></span>
 
           <span class="friend-xp text-xs font-semibold"></span>
 
@@ -297,8 +297,9 @@ export function placeTopThree(student, rank) {
         </div>
 
         <span
-          class="student-name text-xs font-semibold sm:text-sm text-[#D8DFFF]"
-        ></span>
+          class="student-name truncate text-xs font-semibold sm:text-sm text-[#D8DFFF]"
+          style="width: 100px"
+          ></span>
 
       </button>
 
@@ -360,7 +361,7 @@ export function lowerLearderboard(student, rank) {
 
       <div class="w-32 min-w-0">
 
-        <p class="student-name truncate font-semibold text-[#D8DFFF]"></p>
+        <p class="student-name truncate font-semibold text-[#D8DFFF]" style="max-width: 100px"></p>
 
         <p class="student-xp text-sm text-[#B8B0FF]"></p>
 

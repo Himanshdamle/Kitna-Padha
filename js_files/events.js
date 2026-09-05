@@ -45,6 +45,7 @@ export function triggerAllEvents() {
   searchFriendInput();
   checkFriendReqList();
   profileBtnEvent();
+  setDisplayName();
   updateUserProfileEvent();
   uploadPfpEvent();
   refreshLeaderboardEvent();
@@ -511,6 +512,18 @@ function profileBtnEvent() {
   });
 }
 
+const sizer = document.getElementById("display-name-sizer");
+const displayNameInput = document.getElementById("display-name");
+function setDisplayNameSize() {
+  sizer.textContent = displayNameInput.value || "Display name";
+
+  displayNameInput.style.width = `${sizer.offsetWidth + 2}px`;
+}
+
+function setDisplayName() {
+  displayNameInput.addEventListener("input", setDisplayNameSize);
+}
+
 /* =========================================================
    VIEW FRIEND PROFILE
 ========================================================= */
@@ -558,8 +571,8 @@ async function fillUserProfile(profileKitnaId) {
     }
 
     // Header
-    document.querySelector("#display-name").textContent =
-      `${userData.display_name} - Profile`;
+    document.querySelector("#display-name").value = `${userData.display_name}`;
+    setDisplayNameSize();
 
     // Username
     document.querySelector("#display-username").textContent =
@@ -667,11 +680,9 @@ function updateUserProfileEvent() {
 
     startSaving = true;
 
-    const success = await updateUserProfile();
-
-    if (success) {
-      startSaving = false;
-    } else {
+    try {
+      await updateUserProfile();
+    } finally {
       startSaving = false;
     }
   });
@@ -699,6 +710,7 @@ async function updateUserProfile() {
           thoughts,
           exams,
           targeting,
+          display_name: displayNameInput.value,
         }),
       },
     );
