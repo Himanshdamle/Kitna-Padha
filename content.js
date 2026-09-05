@@ -14,8 +14,6 @@ function scrapeStats() {
 
   updateStats(Number(weeklyXP), Number(currentStreak));
 
-  console.log(weeklyXP, currentStreak);
-
   return true;
 }
 
