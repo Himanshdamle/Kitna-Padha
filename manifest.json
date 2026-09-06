@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Kitna Padha?",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Adds a private study group layer to PW.",
 
   "icons": {
@@ -26,12 +26,15 @@
 
   "permissions": ["tabs", "storage"],
 
-  "host_permissions": ["https://kitnapadhabackend-production.up.railway.app/*"],
+  "host_permissions": [
+    "https://kitnapadhabackend-production.up.railway.app/*",
+    "https://api.penpencil.co/*"
+  ],
 
   "content_scripts": [
     {
       "matches": ["https://*.pw.live/*"],
-      "js": ["events.js", "dom.js", "content.js"]
+      "js": ["events.js", "dom.js", "pwApi.js", "content.js"]
     }
   ]
 }

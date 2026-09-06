@@ -1,31 +1,24 @@
-console.log("🔥 PW Friends Extension connected!");
-console.log("( V1.0 )");
+const token = localStorage.getItem("TOKEN");
+const clientId = "5eb393ee95fab7468a79d189";
 
-function scrapeStats() {
-  const weeklyXP = document.querySelector(".div2-CFqxQS")?.textContent.trim();
+async function scrapeStats() {
+  const weekly_xp = await pwWeeklyXp(token, clientId);
+  const allTimeXpData = await pwAllTimeXpData(token, clientId);
+  const streak = await pwStreak(token, clientId);
 
-  const currentStreak = document
-    .querySelector(".streakCount-OM16rw")
-    ?.textContent.trim();
+  updateStats(
+    {
+      pw_weekly_xp: weekly_xp,
+      pw_all_time_xp: allTimeXpData.totalXP,
+    },
 
-  if (!weeklyXP || !currentStreak) {
-    return false;
-  }
+    {
+      current_level: allTimeXpData.currentLevel,
+      highest_level: allTimeXpData.highestLevel,
+    },
 
-  updateStats(Number(weeklyXP), Number(currentStreak));
-
-  return true;
+    { streak: streak },
+  );
 }
 
-if (!scrapeStats()) {
-  const observer = new MutationObserver(() => {
-    if (scrapeStats()) {
-      observer.disconnect();
-    }
-  });
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-}
+scrapeStats();

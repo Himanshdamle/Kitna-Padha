@@ -39,7 +39,7 @@ export function getSearchedFriend(friend, isAlreadyRequested) {
           <span class="friend-name text-xl font-semibold truncate" style="width=90px"></span>
 
           <span class="friend-xp text-xs font-semibold">
-            ${friend.weekly_xp} XP
+            ${friend.weekly_xp.toLocaleString("en-IN")} XP
           </span>
         </div>
 
@@ -78,6 +78,7 @@ export function getSearchedFriend(friend, isAlreadyRequested) {
   const button = dom.querySelector("#send-friend-request");
 
   nameEl.textContent = friend.display_name;
+  nameEl.style.textAlign = "left";
 
   pfpEl.src = friend.pfp
     ? `https://kitnapadhabackend-production.up.railway.app${friend.pfp}`
@@ -203,8 +204,9 @@ export function getFriendRequest(requested) {
 
   pfp.alt = requested.username;
 
-  name.textContent = requested.username;
-  xp.textContent = `${requested.weekly_xp} XP`;
+  name.textContent = requested.display_name;
+  name.style.textAlign = "left";
+  xp.textContent = `${requested.weekly_xp.toLocaleString("en-IN")} XP`;
 
   const acceptedBtn = dom.querySelector(".accepted-btn");
   const rejectedBtn = dom.querySelector(".rejected-btn");
@@ -239,7 +241,31 @@ export function getFriend(friend) {
 
           <span class="friend-name text-xl font-semibold truncate" style="width: 130px"></span>
 
-          <span class="friend-xp text-xs font-semibold"></span>
+          <div
+            class="flex flex-row items-center w-max gap-2"
+          >
+            <div class="flex flex-row gap-0.5 items-center">
+              <img
+                src="assets/xp.png"
+                alt="Study streak"
+                class="h-3.5 w-3.5 object-contain"
+              />
+              <span class="friend-xp text-xs font-semibold"></span>
+            </div>
+
+            <div class="bg-[#C2BAFF] rounded-full w-0.5 h-0.5"></div>
+                
+            <div class="flex flex-row gap-0.5 items-center">
+              <img
+                src="assets/orange_streak.png"
+                alt="Study streak"
+                class="h-3.5 w-3.5 object-contain"
+              />
+              <span class="friend-streak text-xs font-semibold"
+                >${friend.current_streak ?? 0}</span
+              >
+            </div>
+          </div>
 
         </div>
 
@@ -261,7 +287,8 @@ export function getFriend(friend) {
   pfp.alt = friend.display_name;
 
   name.textContent = friend.display_name;
-  xp.textContent = `${friend.weekly_xp} XP`;
+  name.style.textAlign = "left";
+  xp.textContent = `${(friend.weekly_xp ?? 0).toLocaleString("en-IN")}`;
 
   dom.dataset.kitnaId = friend.kitna_id;
 
@@ -334,7 +361,7 @@ export function placeTopThree(student, rank) {
 
   name.textContent = student.display_name;
   rankEl.textContent = rank;
-  xp.textContent = `${student.weekly_xp} XP`;
+  xp.textContent = `${student.weekly_xp.toLocaleString("en-IN")} XP`;
 
   levelBar.style.height = `${250 - 50 * (rank - 1)}px`;
 
@@ -386,7 +413,7 @@ export function lowerLearderboard(student, rank) {
   pfp.alt = `${student.display_name}'s profile picture`;
 
   name.textContent = student.display_name;
-  xp.textContent = `${student.weekly_xp} XP`;
+  xp.textContent = `${student.weekly_xp.toLocaleString("en-IN")} XP`;
 
   return dom;
 }

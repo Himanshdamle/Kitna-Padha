@@ -88,29 +88,25 @@ async function updateStreak_XP(kitna_id, token, updated) {
   loadDOM();
 }
 
-async function updateStats(newWeeklyXP, currentStreak) {
+async function updateStats(
+  { pw_weekly_xp, pw_all_time_xp },
+  { current_level, highest_level },
+  { streak },
+) {
   try {
     const { token } = await chrome.storage.local.get("token");
 
     const kitnaId = await getKitnaId(token);
     const user = await getUserData(kitnaId, token);
 
-    let { all_time_xp, weekly_xp, highest_streak } = user;
-
-    if (newWeeklyXP >= weekly_xp) {
-      const gained_xp = newWeeklyXP - weekly_xp;
-
-      all_time_xp += gained_xp;
-    } else {
-      all_time_xp += newWeeklyXP;
-    }
+    let { all_time_xp, weekly_xp, highest_streak, current_streak } = user;
 
     const update = {
-      weekly_xp: newWeeklyXP,
-      all_time_xp,
+      weekly_xp: pw_weekly_xp ?? weekly_xp,
+      all_time_xp: pw_all_time_xp ?? all_time_xp,
 
-      current_streak: currentStreak,
-      highest_streak: Math.max(currentStreak, highest_streak),
+      current_streak: streak ?? current_streak,
+      highest_streak: Math.max(streak ?? current_streak, highest_streak),
     };
 
     await updateStreak_XP(kitnaId, token, update);

@@ -594,10 +594,11 @@ async function fillUserProfile(profileKitnaId) {
       ` ${userData.highest_streak}`;
 
     // XP
-    document.querySelector("#weekly-xp").textContent = ` ${userData.weekly_xp}`;
+    document.querySelector("#weekly-xp").textContent =
+      ` ${userData.weekly_xp.toLocaleString("en-IN")}`;
 
     document.querySelector("#all-time-xp").textContent =
-      ` ${userData.all_time_xp}`;
+      ` ${userData.all_time_xp.toLocaleString("en-IN")}`;
 
     // Profile information
     document.querySelector("#thoughts").value = userData.thoughts || "";
@@ -629,6 +630,8 @@ function setProfileMode(isOwnProfile) {
 
   const targeting = document.querySelector("#targeting");
 
+  const displayName = document.querySelector("#display-name");
+
   const saveChanges = document.querySelector("#save-changes");
 
   if (isOwnProfile) {
@@ -647,6 +650,7 @@ function setProfileMode(isOwnProfile) {
     thoughts.readOnly = false;
     exams.readOnly = false;
     targeting.readOnly = false;
+    displayName.readOnly = false;
   } else {
     // Disable PFP changing
     profilePicture.disabled = true;
@@ -663,6 +667,7 @@ function setProfileMode(isOwnProfile) {
     thoughts.readOnly = true;
     exams.readOnly = true;
     targeting.readOnly = true;
+    displayName.readOnly = true;
   }
 }
 
