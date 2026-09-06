@@ -4,6 +4,7 @@ import {
   getFriend,
   placeTopThree,
   lowerLearderboard,
+  formatLastSeen,
 } from "./dom.js";
 
 // Get JWT token
@@ -42,6 +43,8 @@ let currentProfile = {
 export function triggerAllEvents() {
   logoutBtnEvent();
   updateNavPanel();
+  allFriends();
+  setInterval(updateFriendPresence, 10000);
   searchFriendInput();
   checkFriendReqList();
   profileBtnEvent();
@@ -120,7 +123,44 @@ export async function allFriends() {
   }
 }
 
-allFriends();
+export async function updateFriendPresence() {
+  try {
+    const response = await fetch(
+      `https://kitnapadhabackend-production.up.railway.app/friends/${encodeURIComponent(kitnaId)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    if (!response.ok) return;
+
+    const friends = await response.json();
+
+    friends.forEach((friend) => {
+      const wrapper = document.querySelector(
+        `.view-friend-profile[data-friend-id="${friend.id}"]`,
+      );
+
+      const signal = wrapper.querySelector(".on-off-signal");
+      const text = wrapper.querySelector(".on-off-text");
+
+      if (!signal || !text) return;
+
+      const online = "#81FF9D";
+      const offline = "#939393";
+
+      signal.style.backgroundColor = friend.pw_online ? online : offline;
+
+      text.textContent = friend.pw_online
+        ? "on"
+        : `off ${formatLastSeen(friend.last_seen)}`;
+    });
+  } catch (error) {
+    console.error("PRESENCE ERROR:", error);
+  }
+}
 
 /* =========================================================
    SEARCH FRIEND

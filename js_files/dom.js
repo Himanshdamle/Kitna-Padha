@@ -219,22 +219,49 @@ export function getFriendRequest(requested) {
   return dom;
 }
 
+export function formatLastSeen(lastSeen) {
+  if (!lastSeen) return "never";
+
+  const diff = Date.now() - new Date(lastSeen).getTime();
+
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (seconds < 60) return "just now";
+  if (minutes < 60) return `${minutes} min ago`;
+  if (hours < 24) return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+  return `${days} day${days === 1 ? "" : "s"} ago`;
+}
+
 export function getFriend(friend) {
+  const online = "#81FF9D";
+  const offline = "#939393";
+
   const str = `
     <button
       type="button"
       class="group view-friend-profile cursor-pointer flex flex-row items-center justify-between w-full rounded-xl p-2 transition-colors hover:bg-[#5A4BDA]/20 focus:outline-none focus:ring-2 focus:ring-[#5A4BDA]"
+      data-friend-id="${friend.id}"
     >
 
       <div class="flex items-center gap-3 w-max">
 
         <div
-          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#AFBFFF]/50"
+          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#AFBFFF]/50 relative"
           aria-hidden="true"
         >
           <img
             class="friend-pfp h-full w-full rounded-full object-cover"
           />
+
+          <div 
+          class="absolute -top-1 -right-1 w-4 h-4 rounded-full on-off-signal" 
+          style="background-color: ${friend.pw_online ? online : offline};"
+          title="${friend.pw_online ? "online" : "offline"}"
+          data-friend-id="${friend.id}"
+           ></div>
         </div>
 
         <div class="flex flex-col items-start justify-start gap-0.5">
@@ -265,6 +292,15 @@ export function getFriend(friend) {
                 >${friend.current_streak ?? 0}</span
               >
             </div>
+
+            <div class="bg-[#C2BAFF] rounded-full w-0.5 h-0.5"></div>
+
+            <span 
+            class="friend-xp text-xs font-semibold on-off-text"
+            data-friend-id="${friend.id}" >
+            ${friend.pw_online ? "on" : `off ${formatLastSeen(friend.last_seen)}`}
+            </span>
+
           </div>
 
         </div>
