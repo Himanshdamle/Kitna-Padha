@@ -38,9 +38,33 @@ export function getSearchedFriend(friend, isAlreadyRequested) {
         <div class="flex flex-col items-start justify-start gap-0.5">
           <span class="friend-name text-xl font-semibold truncate" style="width=90px"></span>
 
-          <span class="friend-xp text-xs font-semibold">
-            ${friend.weekly_xp.toLocaleString("en-IN")} XP
-          </span>
+          <div
+            class="flex flex-row items-center w-max gap-2"
+          >
+            <div class="flex flex-row gap-0.5 items-center">
+              <img
+                src="assets/xp.png"
+                alt="Study streak"
+                class="h-3.5 w-3.5 object-contain"
+              />
+              <span class="friend-xp text-xs font-semibold">${friend.weekly_xp.toLocaleString("en-IN")}</span>
+            </div>
+
+            <div class="bg-[#C2BAFF] rounded-full w-0.5 h-0.5"></div>
+                
+            <div class="flex flex-row gap-0.5 items-center">
+              <img
+                src="assets/orange_streak.png"
+                alt="Study streak"
+                class="h-3.5 w-3.5 object-contain"
+              />
+              <span class="friend-streak text-xs font-semibold"
+                >${friend.current_streak ?? 0}</span
+              >
+            </div>
+
+          </div>
+
         </div>
 
       </div>
@@ -310,6 +334,8 @@ export function getFriend(friend) {
     </button>
   `;
 
+  console.log(friend);
+
   const dom = strToDom(str);
 
   const pfp = dom.querySelector(".friend-pfp");
@@ -372,9 +398,19 @@ export function placeTopThree(student, rank) {
 
         <span class="rank text-3xl font-bold sm:text-4xl"></span>
 
-        <span
-          class="xp absolute top-1 text-center font-medium w-full"
-        ></span>
+        <div
+            class=" absolute top-1 w-max "
+          >
+            <div class="flex flex-row gap-0.5 items-center">
+              <img
+                src="assets/xp.png"
+                alt="Study streak"
+                class="h-3.5 w-3.5 object-contain"
+              />
+              <span class="friend-xp text-xs font-semibold">${student.weekly_xp.toLocaleString("en-IN")}</span>
+            </div>
+
+          </div>
 
       </div>
 
@@ -386,7 +422,6 @@ export function placeTopThree(student, rank) {
   const pfp = dom.querySelector(".student-pfp");
   const name = dom.querySelector(".student-name");
   const rankEl = dom.querySelector(".rank");
-  const xp = dom.querySelector(".xp");
   const levelBar = dom.querySelector(".relative.flex");
 
   pfp.src = student.pfp
@@ -397,7 +432,6 @@ export function placeTopThree(student, rank) {
 
   name.textContent = student.display_name;
   rankEl.textContent = rank;
-  xp.textContent = `${student.weekly_xp.toLocaleString("en-IN")} XP`;
 
   levelBar.style.height = `${250 - 50 * (rank - 1)}px`;
 

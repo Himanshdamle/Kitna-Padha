@@ -21,15 +21,17 @@ let currentPWState = false;
 let presenceInterval = null;
 
 async function sendPWPresence(online) {
-  const kitnaAccount = await chrome.storage.local.get("kitnaAccount");
+  const { token } = await chrome.storage.local.get("token");
 
-  if (!kitnaAccount) return;
-
-  const token = kitnaAccount.token;
+  if (!token) {
+    window.location.href = "login.html";
+    throw new Error("No authentication token found");
+  }
+  console.log(token);
 
   try {
     await fetch(
-      "https://kitnapadhabackend-production.up.railway.apppresence/pw",
+      "https://kitnapadhabackend-production.up.railway.app/presence/pw",
       {
         method: "POST",
         headers: {
@@ -54,7 +56,8 @@ function startPresenceHeartbeat() {
   // Tell backend immediately
   sendPWPresence(true);
 
-  // Then every 30 seconds
+  // Then every 30 seconds.
+  // Reason: if chrome crashes
   presenceInterval = setInterval(() => {
     sendPWPresence(true);
   }, 30000);
