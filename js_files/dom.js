@@ -334,8 +334,6 @@ export function getFriend(friend) {
     </button>
   `;
 
-  console.log(friend);
-
   const dom = strToDom(str);
 
   const pfp = dom.querySelector(".friend-pfp");

@@ -27,7 +27,6 @@ async function sendPWPresence(online) {
     window.location.href = "login.html";
     throw new Error("No authentication token found");
   }
-  console.log(token);
 
   try {
     await fetch(
@@ -43,8 +42,6 @@ async function sendPWPresence(online) {
         }),
       },
     );
-
-    console.log(`PW presence: ${online ? "ONLINE" : "OFFLINE"}`);
   } catch (error) {
     console.error("Failed to update PW presence:", error);
   }
