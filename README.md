@@ -8,8 +8,6 @@
 
 > **Study together. Track progress. Stay consistent.**
 
-Kitna Padha is a Chrome extension built for **Physics Wallah (PW)** students to study alongside their friends.
-
 It lets you track your study progress, connect with friends, compare progress, and stay motivated together.
 
 ## ✨ Features
@@ -95,6 +93,6 @@ If something isn't working correctly, open an issue in this repository with:
 
 ## ❤️ About
 
-Kitna Padha is an independent student project built to make studying with friends a little more motivating.
+Kitna Padha is an independent, unofficial student project and is not affiliated with, endorsed by, or sponsored by Physics Wallah.
 
 More features coming soon.
